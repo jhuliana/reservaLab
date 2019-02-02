@@ -29,6 +29,11 @@ public class Ensayo {
         this.laboratorio_id_laboratorio = laboratorio_id_laboratorio;
     }
 
+    public Ensayo(int id_ensayos) {
+        this.id_ensayos = id_ensayos;
+    }
+    
+
     public int getId_ensayos() {
         return id_ensayos;
     }
@@ -75,9 +80,5 @@ public class Ensayo {
 
     public void setLaboratorio_id_laboratorio(int laboratorio_id_laboratorio) {
         this.laboratorio_id_laboratorio = laboratorio_id_laboratorio;
-    }
-    
-    
-    
-    
+    }    
 }
