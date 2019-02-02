@@ -24,7 +24,7 @@ public class EnsayoDAO {
         return usuarios.getDatosEnsayo();
     }
 
- /*   public Ensayo getEnsayo(int id) {
+    public Ensayo getEnsayo(int id) {
         return usuarios.getDatoEnsayo(id);
     }
 
@@ -48,6 +48,6 @@ public class EnsayoDAO {
             return false;
         }
 
-    }*/
+    }
 
 }
