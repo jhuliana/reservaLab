@@ -26,10 +26,10 @@ public interface Conexion {
     public boolean delateDatosLab(int id);   
     //Ensayo
     List<Ensayo> getDatosEnsayo();
-    /*public Ensayo getDatoEnsayo(int id_ensayo);
+    public Ensayo getDatoEnsayo(int id_ensayo);
     public Ensayo insertDatosEnsayo(Ensayo Ensayo);
     public Ensayo updateDatosEnsayo(Ensayo Ensayo);
-    public boolean delateDatosEnsayo(int id);   */
+    public boolean delateDatosEnsayo(int id);   
     
     
 }
