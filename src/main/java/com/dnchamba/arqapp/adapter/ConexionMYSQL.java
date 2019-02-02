@@ -260,10 +260,10 @@ public class ConexionMYSQL implements Conexion {
     public List<Ensayo> getDatosEnsayo() {
         List<Ensayo> ensayo = new ArrayList<>();
         try {
-            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT id_ensayos, descripcion, norma_nacional, norma_internacional, seccion_ensayo_id_seccion_ensayo, laboratorio_id_laboratorio FROM ensayos");
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT `id_ensayos`, `descripcion`, `norma_nacional`,`norma_internacional`,`seccion_ensayo_id_seccion_ensayo`,`laboratorio_id_laboratorio` FROM `ensayos`");
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
-                ensayo.add(new Ensayo(resultado.getInt("id_ensayo"), resultado.getString("descripcion"), resultado.getString("norma_nacional"), resultado.getString("norma_internacional"), resultado.getInt("seccion_ensayo_id_seccion_ensayo"), resultado.getInt("laboratorio_id_laboratorio")));
+                ensayo.add(new Ensayo(resultado.getInt("id_ensayos"), resultado.getString("descripcion"), resultado.getString("norma_nacional"), resultado.getString("norma_internacional"), resultado.getInt("seccion_ensayo_id_seccion_ensayo"), resultado.getInt("laboratorio_id_laboratorio")));
             }
         } catch (SQLException ex) {
             try {
