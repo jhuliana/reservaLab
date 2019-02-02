@@ -276,14 +276,14 @@ public class ConexionMYSQL implements Conexion {
         return ensayo;
     }
 
-    /*@Override
+    @Override
     public Ensayo getDatoEnsayo(int id_ensayo) {
         Ensayo ensayoRegistrado = new Ensayo();
         try {
-            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT id_ensayos, descripcion, norma_nacional, norma_internacional, seccion_ensayo_id_seccion_ensayo, laboratorio_id_laboratorio FROM laboratorio WHERE id_laboratorio = " + id_laboratorio);
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT id_ensayos, descripcion, norma_nacional, norma_internacional, seccion_ensayo_id_seccion_ensayo, laboratorio_id_laboratorio FROM ensayos WHERE id_ensayos = " + id_ensayo);
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
-                ensayoRegistrado = new Ensayo(resultado.getString("id"), resultado.getString("descripcion"), resultado.getInt("usuario_id_usuario"));
+                ensayoRegistrado = new Ensayo(resultado.getInt("id_ensayos"), resultado.getString("descripcion"), resultado.getString("norma_nacional"), resultado.getString("norma_internacional"), resultado.getInt("seccion_ensayo_id_seccion_ensayo"), resultado.getInt("laboratorio_id_laboratorio"));
             }
         } catch (SQLException ex) {
             try {
@@ -292,22 +292,59 @@ public class ConexionMYSQL implements Conexion {
                 Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
-        return laboratorioRegistrado;
+        return ensayoRegistrado;
     }
 
     @Override
-    public Ensayo insertDatosEnsayo(Ensayo Ensayo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Ensayo insertDatosEnsayo(Ensayo ensayo) {
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("INSERT INTO ensayos(descripcion, norma_nacional, norma_internacional,seccion_ensayo_id_seccion_ensayo,laboratorio_id_laboratorio)"
+                    + "VALUES (?,?,?,?,?)");
+            consulta.setString(1, ensayo.getDescripcion());
+            consulta.setString(2, ensayo.getNorma_nacional());
+            consulta.setString(3, ensayo.getNorma_internacional());
+            consulta.setInt(4, ensayo.getSeccion_ensayo_id_seccion_ensayo());
+            consulta.setInt(5, ensayo.getLaboratorio_id_laboratorio());
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return ensayo;
     }
 
     @Override
-    public Ensayo updateDatosEnsayo(Ensayo Ensayo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Ensayo updateDatosEnsayo(Ensayo ensayo) {
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("UPDATE ensayos SET descripcion=?, norma_nacional=?, norma_internacional=?, seccion_ensayo_id_seccion_ensayo=?,laboratorio_id_laboratorio=? WHERE id_ensayos = ?");
+            consulta.setString(1, ensayo.getDescripcion());
+            consulta.setString(2, ensayo.getNorma_nacional());
+            consulta.setString(3, ensayo.getNorma_internacional());
+            consulta.setInt(4, ensayo.getSeccion_ensayo_id_seccion_ensayo());
+            consulta.setInt(5, ensayo.getLaboratorio_id_laboratorio());
+            consulta.setInt(6, ensayo.getId_ensayos());
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return ensayo;
     }
 
     @Override
     public boolean delateDatosEnsayo(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("DELETE FROM ensayos WHERE id_ensayos = ?");
+            consulta.setInt(1, id);
+            consulta.executeUpdate();
+            if (consulta.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+    }
 
 }
