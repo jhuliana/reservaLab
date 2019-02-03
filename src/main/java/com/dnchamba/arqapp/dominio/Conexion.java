@@ -47,7 +47,7 @@ public interface Conexion {
     public boolean delateDatosEquipo(int id);   
     //Reserva
     List<Reserva> getDatosReserva();
-    public Reserva getDatoReserva(int id_seccion_ensayo);
+    public Reserva getDatoReserva(int id_reserva);
     public Reserva insertDatosReserva(Reserva reserva);
     public Reserva updateDatosReserva(Reserva reserva);
     public boolean delateDatosReserva(int id);   
