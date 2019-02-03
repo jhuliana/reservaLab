@@ -3,6 +3,7 @@ package com.dnchamba.arqapp.adapter;
 import com.dnchamba.arqapp.dominio.Conexion;
 import com.dnchamba.arqapp.rest.model.Ensayo;
 import com.dnchamba.arqapp.rest.model.Laboratorio;
+import com.dnchamba.arqapp.rest.model.SeccionEnsayo;
 import com.dnchamba.arqapp.rest.model.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -335,6 +336,90 @@ public class ConexionMYSQL implements Conexion {
     public boolean delateDatosEnsayo(int id) {
         try {
             PreparedStatement consulta = con.getConnection().prepareStatement("DELETE FROM ensayos WHERE id_ensayos = ?");
+            consulta.setInt(1, id);
+            consulta.executeUpdate();
+            if (consulta.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+    }
+
+    @Override
+    public List<SeccionEnsayo> getDatosSeccionEnsayo() {
+         List<SeccionEnsayo> seccionEnsayo = new ArrayList<>();
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT `id_seccion_ensayos`, `nombre` FROM `seccion_ensayo`");
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                seccionEnsayo.add(new SeccionEnsayo(resultado.getInt("id_seccion_ensayos"), resultado.getString("nombre")));
+            }
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException(ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+        }
+        return seccionEnsayo;
+    }
+
+    @Override
+    public SeccionEnsayo getDatoSeccionEnsayo(int id_seccion_ensayo) {
+        SeccionEnsayo seccionEnsayoRegistrado = new SeccionEnsayo();
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT id_seccion_ensayo, nombre FROM seccion_ensayo WHERE id_seccion_ensayo = " + id_seccion_ensayo);
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                seccionEnsayoRegistrado = new SeccionEnsayo(resultado.getInt("id_seccion_ensayo"), resultado.getString("nombre"));
+            }
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException(ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        return seccionEnsayoRegistrado;
+    }
+
+    @Override
+    public SeccionEnsayo insertDatosSeccionEnsayo(SeccionEnsayo seccionEnsayo) {
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("INSERT INTO seccion_ensayo(id_seccion_ensayo, nombre)"
+                    + "VALUES (?,?)");
+            consulta.setInt(1, seccionEnsayo.getId_seccion_ensayo());
+            consulta.setString(2, seccionEnsayo.getNombre());
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return seccionEnsayo;
+    }
+
+    @Override
+    public SeccionEnsayo updateDatosSeccionEnsayo(SeccionEnsayo seccionEnsayo) {
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("UPDATE ensayos SET descripcion=?, norma_nacional=?, norma_internacional=?, seccion_ensayo_id_seccion_ensayo=?,laboratorio_id_laboratorio=? WHERE id_ensayos = ?");
+            consulta.setInt(1, seccionEnsayo.getId_seccion_ensayo());
+            consulta.setString(2, seccionEnsayo.getNombre());
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return seccionEnsayo;
+    }
+
+    @Override
+    public boolean delateDatosSeccionEnsayo(int id) {
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("DELETE FROM seccion_ensayo WHERE id_seccion_ensayo = ?");
             consulta.setInt(1, id);
             consulta.executeUpdate();
             if (consulta.executeUpdate() == 1) {
