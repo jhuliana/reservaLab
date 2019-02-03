@@ -13,7 +13,7 @@ public class Equipo {
     private int id_equipo;
     private String nombre_equipo;
     private String descripcion;
-    private char estado;
+    private boolean estado;
     private int cantidad;
     private int laboratorio_id_laboratorio;
     private int laboratorio_encargado_lab_id_encargado_lab;
@@ -21,7 +21,7 @@ public class Equipo {
     public Equipo() {
     }
 
-    public Equipo(int id_equipo, String nombre_equipo, String descripcion, char estado, int cantidad, int laboratorio_id_laboratorio, int laboratorio_encargado_lab_id_encargado_lab) {
+    public Equipo(int id_equipo, String nombre_equipo, String descripcion, boolean estado, int cantidad, int laboratorio_id_laboratorio, int laboratorio_encargado_lab_id_encargado_lab) {
         this.id_equipo = id_equipo;
         this.nombre_equipo = nombre_equipo;
         this.descripcion = descripcion;
@@ -55,11 +55,11 @@ public class Equipo {
         this.descripcion = descripcion;
     }
 
-    public char getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(char estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 

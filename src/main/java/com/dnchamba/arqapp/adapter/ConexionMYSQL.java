@@ -2,7 +2,9 @@ package com.dnchamba.arqapp.adapter;
 
 import com.dnchamba.arqapp.dominio.Conexion;
 import com.dnchamba.arqapp.rest.model.Ensayo;
+import com.dnchamba.arqapp.rest.model.Equipo;
 import com.dnchamba.arqapp.rest.model.Laboratorio;
+import com.dnchamba.arqapp.rest.model.Reserva;
 import com.dnchamba.arqapp.rest.model.SeccionEnsayo;
 import com.dnchamba.arqapp.rest.model.Usuario;
 import java.sql.PreparedStatement;
@@ -430,6 +432,153 @@ public class ConexionMYSQL implements Conexion {
         }
 
         return false;
+    }
+
+    //Equipo
+    @Override
+    public List<Equipo> getDatosEquipo() {
+        List<Equipo> equipo = new ArrayList<>();
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT `id_equipo`, `nombre_equipo`, `descripcion`,`estado`,`cantidad`,`laboratorio_id_laboratorio`,`laboratorio_encargado_lab_id_encargado_lab` FROM `equipo`");
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                equipo.add(new Equipo(resultado.getInt("id_equipo"), resultado.getString("nombre_equipo"), resultado.getString("descripcion"), resultado.getBoolean("estado"), resultado.getInt("cantidad"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("laboratorio_encargado_lab_id_encargado_lab")));
+            }
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException(ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+        }
+        return equipo;
+    }
+
+    @Override
+    public Equipo getDatoEquipo(int id_equipo) {
+        Equipo equipoRegistrado = new Equipo();
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("`id_equipo`, `nombre_equipo`, `descripcion`,`estado`,`cantidad`,`laboratorio_id_laboratorio`,`laboratorio_encargado_lab_id_encargado_lab` FROM equipo WHERE id_equipo = " + id_equipo);
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                equipoRegistrado = new Equipo(resultado.getInt("id_equipo"), resultado.getString("nombre_equipo"), resultado.getString("descripcion"), resultado.getBoolean("estado"), resultado.getInt("cantidad"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("laboratorio_encargado_lab_id_encargado_lab"));
+            }
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException(ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        return equipoRegistrado;
+    }
+
+    @Override
+    public Equipo insertDatosEquipo(Equipo equipo) {
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("INSERT INTO equipo(`id_equipo`, `nombre_equipo`, `descripcion`,`estado`,`cantidad`,`laboratorio_id_laboratorio`,`laboratorio_encargado_lab_id_encargado_lab`)"
+                    + "VALUES (?,?,?,?,?,?,?)");
+            consulta.setInt(1, equipo.getId_equipo());
+            consulta.setString(2, equipo.getNombre_equipo());
+            consulta.setString(3, equipo.getDescripcion());
+            consulta.setBoolean(4, equipo.getEstado());
+            consulta.setInt(5, equipo.getCantidad());
+            consulta.setInt(6, equipo.getLaboratorio_id_laboratorio());
+            consulta.setInt(7, equipo.getLaboratorio_encargado_lab_id_encargado_lab());
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return equipo;
+    }
+
+    @Override
+    public Equipo updateDatosEquipo(Equipo equipo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean delateDatosEquipo(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    //Reserva
+    @Override
+    public List<Reserva> getDatosReserva() {
+        List<Reserva> reserva = new ArrayList<>();
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT `id_reserva`, `titulacion`, `periodo_academico`,`nivel_academico`,`componente`,`codigo_proyecto`,`tema_practica`,`docente`, `estudiante`,`ciclo`, `fecha`, `hora`,`laboratorio_id_laboratorio`,`usuario_id_usuario`  FROM `reserva`");
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                reserva.add(new Reserva(resultado.getInt("id_reserva"), resultado.getString("titulacion"), resultado.getString("periodo_academico"), resultado.getString("nivel_academico"), resultado.getString("componente"), resultado.getString("codigo_proyecto"),resultado.getString("tema_practica"), resultado.getString("docente"), resultado.getString("estudiante"), resultado.getString("ciclo"), resultado.getString("fecha"), resultado.getString("hora"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("usuario_id_usuario")));
+            }
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException(ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+        }
+        return reserva;
+    }
+
+    @Override
+    public Reserva getDatoReserva(int id_reserva) {
+        Reserva reservaRegistrado = new Reserva();
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("\"SELECT `id_reserva`, `titulacion`, `periodo_academico`,`nivel_academico`,`componente`,`codigo_proyecto`,`tema_practica`,`docente`, `estudiante`,`ciclo`, `fecha`, `hora`,`laboratorio_id_laboratorio`,`usuario_id_usuario`  FROM `reserva` WHERE id_reserva = " + id_reserva);
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                reservaRegistrado = new Reserva(resultado.getInt("id_reserva"), resultado.getString("titulacion"), resultado.getString("periodo_academico"), resultado.getString("nivel_academico"), resultado.getString("componente"), resultado.getString("codigo_proyecto"),resultado.getString("tema_practica"), resultado.getString("docente"), resultado.getString("estudiante"), resultado.getString("ciclo"), resultado.getString("fecha"), resultado.getString("hora"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("usuario_id_usuario"));
+            }
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException(ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        return reservaRegistrado;
+    }
+
+    @Override
+    public Reserva insertDatosReserva(Reserva reserva) {
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("INSERT INTO reserva(`id_reserva`, `titulacion`, `periodo_academico`,`nivel_academico`,`componente`,`codigo_proyecto`,`tema_practica`,`docente`, `estudiante`,`ciclo`, `fecha`, `hora`,`laboratorio_id_laboratorio`,`usuario_id_usuario`)"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            consulta.setInt(1, reserva.getId_reserva());
+            consulta.setString(2, reserva.getTitulacion());
+            consulta.setString(3, reserva.getPeriodo_academico());
+            consulta.setString(4, reserva.getNivel_academico());
+            consulta.setString(5, reserva.getComponente());
+            consulta.setString(6, reserva.getCodigo_proyecto());
+            consulta.setString(7, reserva.getTema_practica());
+            consulta.setString(8, reserva.getDocente());
+            consulta.setString(9, reserva.getEstudiante());
+            consulta.setString(10, reserva.getCiclo());
+            consulta.setString(11, reserva.getFecha());
+            consulta.setString(12, reserva.getHora());
+            consulta.setInt(13, reserva.getLaboratorio_id_laboratorio());
+            consulta.setInt(14, reserva.getUsuario_id_usuario());
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return reserva;
+    }
+
+    @Override
+    public Reserva updateDatosReserva(Reserva reserva) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean delateDatosReserva(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
