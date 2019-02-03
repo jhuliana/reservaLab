@@ -23,7 +23,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Dayana
  */
-@Path("usuario")
+@Path("usuarios")
 public class UsuarioService {    
     private static Conexion usuario = new ConexionMYSQL();
     private static UsuarioDAO usuarioDAO = new UsuarioDAO(usuario);

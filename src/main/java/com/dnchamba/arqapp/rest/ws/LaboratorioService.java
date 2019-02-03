@@ -24,7 +24,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Jhuliana
  */
-@Path("laboratorio")
+@Path("laboratorios")
 public class LaboratorioService {
     private static Conexion usuario = new ConexionMYSQL();
     private static LaboratorioDAO laboratorioDAO = new LaboratorioDAO(usuario);

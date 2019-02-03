@@ -24,7 +24,8 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-    public Usuario(String nombres) {
+    public Usuario(int id_usuario, String nombres) {
+        this.id_usuario = id_usuario;
         this.nombres = nombres;
     }
     
@@ -32,7 +33,8 @@ public class Usuario {
         this.id_usuario = id_usuario;
     }
 
-    public Usuario(String usuario, String contrasenia, int tipo) {
+    public Usuario(int id_usuario, String usuario, String contrasenia, int tipo) {
+        this.id_usuario = id_usuario;
         this.usuario = usuario;
         this.contrasenia = contrasenia;
         this.tipo = tipo;

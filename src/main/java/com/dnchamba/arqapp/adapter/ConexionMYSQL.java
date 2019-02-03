@@ -47,10 +47,10 @@ public class ConexionMYSQL implements Conexion {
     public Usuario getDatoUsuario(String usuario, String contrasenia) {
         Usuario usuarioRegistrado = new Usuario();
         try {
-            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT usuario, contrasenia, tipo FROM usuario WHERE usuario = '" + usuario + "' AND contrasenia = '" + contrasenia + "'");
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT id_usuario, usuario, contrasenia, tipo FROM usuario WHERE usuario = '" + usuario + "' AND contrasenia = '" + contrasenia + "'");
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
-                usuarioRegistrado = new Usuario(resultado.getString("usuario"), resultado.getString("contrasenia"), resultado.getInt("tipo"));
+                usuarioRegistrado = new Usuario(resultado.getInt("id_usuario"), resultado.getString("usuario"), resultado.getString("contrasenia"), resultado.getInt("tipo"));
             }
         } catch (SQLException ex) {
             try {
@@ -136,10 +136,10 @@ public class ConexionMYSQL implements Conexion {
     public List<Laboratorio> getDatosLaboratorio() {
         List<Laboratorio> laboratorio = new ArrayList<>();
         try {
-            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT id_laboratorio, nombre, nombre, descripcion, usuario_id_usuario FROM laboratorio");
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT id_laboratorio, nombre, nombre, descripcion, us.nombres AS nom_usuario, us.mail AS mail FROM laboratorio lab, usuario us WHERE lab.usuario_id_usuario = us.id_usuario");
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
-                laboratorio.add(new Laboratorio(resultado.getInt("id_laboratorio"), resultado.getString("nombre"), resultado.getString("descripcion"), resultado.getInt("usuario_id_usuario")));
+                laboratorio.add(new Laboratorio(resultado.getInt("id_laboratorio"), resultado.getString("nombre"), resultado.getString("descripcion"), resultado.getString("nom_usuario"), resultado.getString("mail")));
             }
         } catch (SQLException ex) {
             try {
@@ -238,10 +238,10 @@ public class ConexionMYSQL implements Conexion {
     public Usuario obtenerEncargadoDatosLab(int id_usuario_id_usuario) {
         Usuario usuarioRegistrado = new Usuario();
         try {
-            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT us.nombres FROM usuario us WHERE us.id_usuario = " + id_usuario_id_usuario);
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT us.nombres FROM usuario us, laboratorio lab WHERE us.id_usuario = " + id_usuario_id_usuario);
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
-                usuarioRegistrado = new Usuario(resultado.getString("nombres"));
+                usuarioRegistrado = new Usuario(resultado.getInt("id_usuario"),resultado.getString("nombres"));
 
             }
         } catch (SQLException ex) {
