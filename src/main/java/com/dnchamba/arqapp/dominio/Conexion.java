@@ -3,6 +3,7 @@ package com.dnchamba.arqapp.dominio;
 import com.dnchamba.arqapp.rest.model.Ensayo;
 import com.dnchamba.arqapp.rest.model.Laboratorio;
 import com.dnchamba.arqapp.rest.model.Usuario;
+import com.dnchamba.arqapp.rest.model.SeccionEnsayo;
 import java.util.List;
 
 /**
@@ -30,6 +31,12 @@ public interface Conexion {
     public Ensayo insertDatosEnsayo(Ensayo Ensayo);
     public Ensayo updateDatosEnsayo(Ensayo Ensayo);
     public boolean delateDatosEnsayo(int id);   
+    //Seccion_Ensayo
+    List<SeccionEnsayo> getDatosSeccionEnsayo();
+    public SeccionEnsayo getDatoSeccionEnsayo(int id_seccion_ensayo);
+    public SeccionEnsayo insertDatosSeccionEnsayo(SeccionEnsayo seccionEnsayo);
+    public SeccionEnsayo updateDatosSeccionEnsayo(SeccionEnsayo seccionEnsayo);
+    public boolean delateDatosSeccionEnsayo(int id);   
     
     
 }
