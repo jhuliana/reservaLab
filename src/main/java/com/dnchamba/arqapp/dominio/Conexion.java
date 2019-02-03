@@ -1,7 +1,9 @@
 package com.dnchamba.arqapp.dominio;
 
 import com.dnchamba.arqapp.rest.model.Ensayo;
+import com.dnchamba.arqapp.rest.model.Equipo;
 import com.dnchamba.arqapp.rest.model.Laboratorio;
+import com.dnchamba.arqapp.rest.model.Reserva;
 import com.dnchamba.arqapp.rest.model.Usuario;
 import com.dnchamba.arqapp.rest.model.SeccionEnsayo;
 import java.util.List;
@@ -37,6 +39,18 @@ public interface Conexion {
     public SeccionEnsayo insertDatosSeccionEnsayo(SeccionEnsayo seccionEnsayo);
     public SeccionEnsayo updateDatosSeccionEnsayo(SeccionEnsayo seccionEnsayo);
     public boolean delateDatosSeccionEnsayo(int id);   
+    //Equipo
+    List<Equipo> getDatosEquipo();
+    public Equipo getDatoEquipo(int id_equipo);
+    public Equipo insertDatosEquipo(Equipo equipo);
+    public Equipo updateDatosEquipo(Equipo equipo);
+    public boolean delateDatosEquipo(int id);   
+    //Reserva
+    List<Reserva> getDatosReserva();
+    public Reserva getDatoReserva(int id_seccion_ensayo);
+    public Reserva insertDatosReserva(Reserva reserva);
+    public Reserva updateDatosReserva(Reserva reserva);
+    public boolean delateDatosReserva(int id);   
     
     
 }

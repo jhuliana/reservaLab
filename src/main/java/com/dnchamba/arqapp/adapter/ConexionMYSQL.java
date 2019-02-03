@@ -2,7 +2,9 @@ package com.dnchamba.arqapp.adapter;
 
 import com.dnchamba.arqapp.dominio.Conexion;
 import com.dnchamba.arqapp.rest.model.Ensayo;
+import com.dnchamba.arqapp.rest.model.Equipo;
 import com.dnchamba.arqapp.rest.model.Laboratorio;
+import com.dnchamba.arqapp.rest.model.Reserva;
 import com.dnchamba.arqapp.rest.model.SeccionEnsayo;
 import com.dnchamba.arqapp.rest.model.Usuario;
 import java.sql.PreparedStatement;
@@ -430,6 +432,88 @@ public class ConexionMYSQL implements Conexion {
         }
 
         return false;
+    }
+
+    //Equipo
+    @Override
+    public List<Equipo> getDatosEquipo() {
+        List<Equipo> equipo = new ArrayList<>();
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT `id_equipo`, `nombre_equipo`, `descripcion`,`estado`,`cantidad`,`laboratorio_id_laboratorio`,`laboratorio_encargado_lab_id_encargado_lab` FROM `equipo`");
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                equipo.add(new Equipo(resultado.getInt("id_equipo"), resultado.getString("nombre_equipo"), resultado.getString("descripcion"), resultado.getBoolean("estado"), resultado.getInt("cantidad"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("laboratorio_encargado_lab_id_encargado_lab")));
+            }
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException(ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+        }
+        return equipo;
+    }
+
+    @Override
+    public Equipo getDatoEquipo(int id_equipo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Equipo insertDatosEquipo(Equipo equipo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Equipo updateDatosEquipo(Equipo equipo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean delateDatosEquipo(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    //Reserva
+    @Override
+    public List<Reserva> getDatosReserva() {
+        List<Reserva> reserva = new ArrayList<>();
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT `id_reserva`, `titulacion`, `periodo_academico`,`nivel_academico`,`componente`,`codigo_proyecto`,`tema_practica`,`docente`, `estudiante`,`ciclo`, `fecha`, `hora`,`laboratorio_id_laboratorio`,`usuario_id_usuario`  FROM `reserva`");
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                reserva.add(new Reserva(resultado.getInt("id_reserva"), resultado.getString("titulacion"), resultado.getString("periodo_academico"), resultado.getString("nivel_academico"), resultado.getString("componente"), resultado.getString("codigo_proyecto"),resultado.getString("tema_practica"), resultado.getString("docente"), resultado.getString("estudiante"), resultado.getString("ciclo"), resultado.getString("fecha"), resultado.getString("hora"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("usuario_id_usuario")));
+            }
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException(ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+        }
+        return reserva;
+    }
+
+    @Override
+    public Reserva getDatoReserva(int id_seccion_ensayo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Reserva insertDatosReserva(Reserva reserva) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Reserva updateDatosReserva(Reserva reserva) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean delateDatosReserva(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
