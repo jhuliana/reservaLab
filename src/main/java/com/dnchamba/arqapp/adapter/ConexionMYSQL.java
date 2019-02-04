@@ -554,7 +554,7 @@ public class ConexionMYSQL implements Conexion {
     public Reserva getDatoReserva(int id_reserva) {
         Reserva reservaRegistrado = new Reserva();
         try {
-            PreparedStatement consulta = con.getConnection().prepareStatement("\"SELECT `id_reserva`, `titulacion`, `periodo_academico`,`nivel_academico`,`componente`,`codigo_proyecto`,`tema_practica`,`docente`, `estudiante`,`ciclo`, `fecha`, `hora`,`laboratorio_id_laboratorio`,`usuario_id_usuario`  FROM `reserva` WHERE id_reserva = " + id_reserva);
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT `id_reserva`, `titulacion`, `periodo_academico`,`nivel_academico`,`componente`,`codigo_proyecto`,`tema_practica`,`docente`, `estudiante`,`ciclo`, `fecha`, `hora`,`laboratorio_id_laboratorio`,`usuario_id_usuario`  FROM `reserva` WHERE id_reserva = " + id_reserva);
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
                 reservaRegistrado = new Reserva(resultado.getInt("id_reserva"), resultado.getString("titulacion"), resultado.getString("periodo_academico"), resultado.getString("nivel_academico"), resultado.getString("componente"), resultado.getString("codigo_proyecto"), resultado.getString("tema_practica"), resultado.getString("docente"), resultado.getString("estudiante"), resultado.getString("ciclo"), resultado.getString("fecha"), resultado.getString("hora"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("usuario_id_usuario"));
