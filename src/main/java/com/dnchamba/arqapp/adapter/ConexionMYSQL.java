@@ -29,10 +29,10 @@ public class ConexionMYSQL implements Conexion {
     public List<Usuario> getDatosUsuario() {
         List<Usuario> usuario = new ArrayList<>();
         try {
-            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT Id_usuario, cedula, nombres, usuario, contrasenia, tipo FROM usuario");
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT Id_usuario, cedula, nombres, usuario, contrasenia, tipo, email FROM usuario");
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
-                usuario.add(new Usuario(resultado.getInt("Id_usuario"), resultado.getString("cedula"), resultado.getString("nombres"), resultado.getString("usuario"), resultado.getString("contrasenia"), resultado.getInt("tipo")));
+                usuario.add(new Usuario(resultado.getInt("Id_usuario"), resultado.getString("cedula"), resultado.getString("nombres"), resultado.getString("usuario"), resultado.getString("contrasenia"), resultado.getInt("tipo"), resultado.getString("email")));
             }
         } catch (SQLException ex) {
             try {
@@ -68,13 +68,14 @@ public class ConexionMYSQL implements Conexion {
     @Override
     public Usuario insertDatosUsuario(Usuario usuario) {
         try {
-            PreparedStatement consulta = con.getConnection().prepareStatement("INSERT INTO usuario(cedula, nombres, usuario, contrasenia, tipo)"
-                    + "VALUES (?,?,?,?,?)");
+            PreparedStatement consulta = con.getConnection().prepareStatement("INSERT INTO usuario(cedula, nombres, usuario, contrasenia, tipo,email)"
+                    + "VALUES (?,?,?,?,?,?)");
             consulta.setString(1, usuario.getCedula());
             consulta.setString(2, usuario.getNombres());
             consulta.setString(3, usuario.getUsuario());
             consulta.setString(4, usuario.getContrasenia());
             consulta.setInt(5, usuario.getTipo());
+            consulta.setString(6, usuario.getEmail());
             consulta.executeUpdate();
 
         } catch (SQLException ex) {

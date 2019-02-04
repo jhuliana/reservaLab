@@ -10,18 +10,20 @@ public class Usuario {
     private String nombres;
     private String usuario;
     private String contrasenia;
+    private String email;
     private int tipo;
 
     public Usuario() {
     }
 
-    public Usuario(int id_usuario, String cedula, String nombres, String usuario, String contrasenia, int tipo) {
+    public Usuario(int id_usuario, String cedula, String nombres, String usuario, String contrasenia, int tipo, String email) {
         this.id_usuario = id_usuario;
         this.cedula = cedula;
         this.nombres = nombres;
         this.usuario = usuario;
         this.contrasenia = contrasenia;
         this.tipo = tipo;
+        this.email = email;
     }
 
     public Usuario(int id_usuario, String nombres) {
@@ -86,6 +88,14 @@ public class Usuario {
 
     public void setTipo(int tipo) {
         this.tipo = tipo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
    
 
