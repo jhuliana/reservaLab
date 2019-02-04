@@ -11,20 +11,38 @@ import java.util.logging.Logger;
  * @author Dayana
  */
 public class EstablecerConexion {
-       public  Connection con;
-    public Connection getConnection() {
-         String sURL = "jdbc:mysql://localhost:3306/reserva_lab?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-        try {
-            con = DriverManager.getConnection(sURL, "root", "");
-        } catch (SQLException ex) {
-            Logger.getLogger(EstablecerConexion.class.getName()).log(Level.SEVERE, null, ex);
+       private Connection con;
+       private static EstablecerConexion establecerCon;
+       
+
+    private EstablecerConexion(Connection con) {
+        this.con = con;
+    }
+
+    public static EstablecerConexion getSingletonInstance(Connection con){
+        if (establecerCon == null) {
+            establecerCon = new EstablecerConexion(con);
+        }else{
+            System.out.println("No se puede crear la conexión, porque ya existe esa conexion");
         }
+        return establecerCon;
+    }
+
+    public Connection getCon() {
         return con;
     }
+
+    public void setCon(Connection con) {
+        this.con = con;
+    }    
     
-    public void CerrarConexion() throws SQLException{
-       if (con != null) {
-            con.close();
+    @Override
+    public EstablecerConexion clone(){
+        try{
+            throw new CloneNotSupportedException();
+        }catch (CloneNotSupportedException ex){
+            System.out.println("No se puede clonar un objeto de la clase EstablecerConexion");
         }
-    }
+        return null;
+    }   
 }
