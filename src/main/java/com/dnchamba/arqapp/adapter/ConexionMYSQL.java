@@ -613,6 +613,7 @@ public class ConexionMYSQL implements Conexion {
             consulta.setString(11, reserva.getHora());
             consulta.setInt(12, reserva.getLaboratorio_id_laboratorio());
             consulta.setInt(13, reserva.getUsuario_id_usuario());
+            consulta.setInt(14, reserva.getId_reserva());
             consulta.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
