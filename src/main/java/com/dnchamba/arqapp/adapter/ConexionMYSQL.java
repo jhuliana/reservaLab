@@ -459,7 +459,7 @@ public class ConexionMYSQL implements Conexion {
     public Equipo getDatoEquipo(int id_equipo) {
         Equipo equipoRegistrado = new Equipo();
         try {
-            PreparedStatement consulta = con.getConnection().prepareStatement("`id_equipo`, `nombre_equipo`, `descripcion`,`estado`,`cantidad`,`laboratorio_id_laboratorio`,`laboratorio_encargado_lab_id_encargado_lab` FROM equipo WHERE id_equipo = " + id_equipo);
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT `id_equipo`, `nombre_equipo`, `descripcion`,`estado`,`cantidad`,`laboratorio_id_laboratorio`,`laboratorio_encargado_lab_id_encargado_lab` FROM equipo WHERE id_equipo = " + id_equipo);
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
                 equipoRegistrado = new Equipo(resultado.getInt("id_equipo"), resultado.getString("nombre_equipo"), resultado.getString("descripcion"), resultado.getBoolean("estado"), resultado.getInt("cantidad"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("laboratorio_encargado_lab_id_encargado_lab"));
