@@ -29,6 +29,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Jhuliana
  */
+@Path("seccion")
 public class SeccionEnsayoService {
     private static Conexion usuario = new ConexionMYSQL();
     private static SeccionEnsayoDAO seccionEnsayoDAO = new SeccionEnsayoDAO(usuario);

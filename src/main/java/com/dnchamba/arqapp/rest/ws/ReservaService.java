@@ -29,6 +29,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Jhuliana
  */
+@Path("reserva")
 public class ReservaService {
     private static Conexion usuario = new ConexionMYSQL();
     private static ReservaDAO reservaDAO = new ReservaDAO(usuario);
