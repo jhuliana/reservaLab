@@ -244,7 +244,7 @@ public class ConexionMYSQL implements Conexion {
             PreparedStatement consulta = con.getConnection().prepareStatement("SELECT us.nombres FROM usuario us, laboratorio lab WHERE us.id_usuario = " + id_usuario_id_usuario);
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
-                usuarioRegistrado = new Usuario(resultado.getInt("id_usuario"),resultado.getString("nombres"));
+                usuarioRegistrado = new Usuario(resultado.getInt("id_usuario"), resultado.getString("nombres"));
 
             }
         } catch (SQLException ex) {
@@ -352,7 +352,7 @@ public class ConexionMYSQL implements Conexion {
 
     @Override
     public List<SeccionEnsayo> getDatosSeccionEnsayo() {
-         List<SeccionEnsayo> seccionEnsayo = new ArrayList<>();
+        List<SeccionEnsayo> seccionEnsayo = new ArrayList<>();
         try {
             PreparedStatement consulta = con.getConnection().prepareStatement("SELECT `id_seccion_ensayos`, `nombre` FROM `seccion_ensayo`");
             ResultSet resultado = consulta.executeQuery();
@@ -407,9 +407,9 @@ public class ConexionMYSQL implements Conexion {
     @Override
     public SeccionEnsayo updateDatosSeccionEnsayo(SeccionEnsayo seccionEnsayo) {
         try {
-            PreparedStatement consulta = con.getConnection().prepareStatement("UPDATE ensayos SET descripcion=?, norma_nacional=?, norma_internacional=?, seccion_ensayo_id_seccion_ensayo=?,laboratorio_id_laboratorio=? WHERE id_ensayos = ?");
-            consulta.setInt(1, seccionEnsayo.getId_seccion_ensayo());
-            consulta.setString(2, seccionEnsayo.getNombre());
+            PreparedStatement consulta = con.getConnection().prepareStatement("UPDATE seccion_ensayo SET nombre=? WHERE id_seccion_ensayo = ?");
+            consulta.setString(1, seccionEnsayo.getNombre());
+            consulta.setInt(2, seccionEnsayo.getId_seccion_ensayo());
             consulta.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -496,12 +496,37 @@ public class ConexionMYSQL implements Conexion {
 
     @Override
     public Equipo updateDatosEquipo(Equipo equipo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("UPDATE equipo SET nombre_equipo=?, descripcion=?, estado=?, cantidad=?,laboratorio_id_laboratorio=?, laboratorio_encargado_lab_id_encargado_lab=? WHERE id_equipo = ?");
+            consulta.setString(1, equipo.getNombre_equipo());
+            consulta.setString(2, equipo.getDescripcion());
+            consulta.setBoolean(3, equipo.getEstado());
+            consulta.setInt(4, equipo.getCantidad());
+            consulta.setInt(5, equipo.getLaboratorio_id_laboratorio());
+            consulta.setInt(6, equipo.getLaboratorio_encargado_lab_id_encargado_lab());
+            consulta.setInt(7, equipo.getId_equipo());
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return equipo;
     }
 
     @Override
     public boolean delateDatosEquipo(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("DELETE FROM equipo WHERE id_equipo = ?");
+            consulta.setInt(1, id);
+            consulta.executeUpdate();
+            if (consulta.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
     }
 
     //Reserva
@@ -512,7 +537,7 @@ public class ConexionMYSQL implements Conexion {
             PreparedStatement consulta = con.getConnection().prepareStatement("SELECT `id_reserva`, `titulacion`, `periodo_academico`,`nivel_academico`,`componente`,`codigo_proyecto`,`tema_practica`,`docente`, `estudiante`,`ciclo`, `fecha`, `hora`,`laboratorio_id_laboratorio`,`usuario_id_usuario`  FROM `reserva`");
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
-                reserva.add(new Reserva(resultado.getInt("id_reserva"), resultado.getString("titulacion"), resultado.getString("periodo_academico"), resultado.getString("nivel_academico"), resultado.getString("componente"), resultado.getString("codigo_proyecto"),resultado.getString("tema_practica"), resultado.getString("docente"), resultado.getString("estudiante"), resultado.getString("ciclo"), resultado.getString("fecha"), resultado.getString("hora"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("usuario_id_usuario")));
+                reserva.add(new Reserva(resultado.getInt("id_reserva"), resultado.getString("titulacion"), resultado.getString("periodo_academico"), resultado.getString("nivel_academico"), resultado.getString("componente"), resultado.getString("codigo_proyecto"), resultado.getString("tema_practica"), resultado.getString("docente"), resultado.getString("estudiante"), resultado.getString("ciclo"), resultado.getString("fecha"), resultado.getString("hora"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("usuario_id_usuario")));
             }
         } catch (SQLException ex) {
             try {
@@ -532,7 +557,7 @@ public class ConexionMYSQL implements Conexion {
             PreparedStatement consulta = con.getConnection().prepareStatement("\"SELECT `id_reserva`, `titulacion`, `periodo_academico`,`nivel_academico`,`componente`,`codigo_proyecto`,`tema_practica`,`docente`, `estudiante`,`ciclo`, `fecha`, `hora`,`laboratorio_id_laboratorio`,`usuario_id_usuario`  FROM `reserva` WHERE id_reserva = " + id_reserva);
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
-                reservaRegistrado = new Reserva(resultado.getInt("id_reserva"), resultado.getString("titulacion"), resultado.getString("periodo_academico"), resultado.getString("nivel_academico"), resultado.getString("componente"), resultado.getString("codigo_proyecto"),resultado.getString("tema_practica"), resultado.getString("docente"), resultado.getString("estudiante"), resultado.getString("ciclo"), resultado.getString("fecha"), resultado.getString("hora"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("usuario_id_usuario"));
+                reservaRegistrado = new Reserva(resultado.getInt("id_reserva"), resultado.getString("titulacion"), resultado.getString("periodo_academico"), resultado.getString("nivel_academico"), resultado.getString("componente"), resultado.getString("codigo_proyecto"), resultado.getString("tema_practica"), resultado.getString("docente"), resultado.getString("estudiante"), resultado.getString("ciclo"), resultado.getString("fecha"), resultado.getString("hora"), resultado.getInt("laboratorio_id_laboratorio"), resultado.getInt("usuario_id_usuario"));
             }
         } catch (SQLException ex) {
             try {
@@ -573,12 +598,44 @@ public class ConexionMYSQL implements Conexion {
 
     @Override
     public Reserva updateDatosReserva(Reserva reserva) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("UPDATE reserva SET titulacion=?, periodo_academico=?, nivel_academico=?, componente=?, codigo_proyecto=?, tema_practica=?, docente=?, estudiante=?, ciclo=?, fecha=?, hora=?, laboratorio_id_laboratorio=?, usuario_id_usuario=? WHERE id_reserva = ?");
+            consulta.setString(1, reserva.getTitulacion());
+            consulta.setString(2, reserva.getPeriodo_academico());
+            consulta.setString(3, reserva.getNivel_academico());
+            consulta.setString(4, reserva.getComponente());
+            consulta.setString(5, reserva.getCodigo_proyecto());
+            consulta.setString(6, reserva.getTema_practica());
+            consulta.setString(7, reserva.getDocente());
+            consulta.setString(8, reserva.getEstudiante());
+            consulta.setString(9, reserva.getCiclo());
+            consulta.setString(10, reserva.getFecha());
+            consulta.setString(11, reserva.getHora());
+            consulta.setInt(12, reserva.getLaboratorio_id_laboratorio());
+            consulta.setInt(13, reserva.getUsuario_id_usuario());
+            consulta.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return reserva;
+
     }
 
     @Override
     public boolean delateDatosReserva(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement consulta = con.getConnection().prepareStatement("DELETE FROM reserva WHERE id_reserva = ?");
+            consulta.setInt(1, id);
+            consulta.executeUpdate();
+            if (consulta.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
     }
 
 }
