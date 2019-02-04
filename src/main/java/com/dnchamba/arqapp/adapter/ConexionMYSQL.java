@@ -354,10 +354,10 @@ public class ConexionMYSQL implements Conexion {
     public List<SeccionEnsayo> getDatosSeccionEnsayo() {
         List<SeccionEnsayo> seccionEnsayo = new ArrayList<>();
         try {
-            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT `id_seccion_ensayos`, `nombre` FROM `seccion_ensayo`");
+            PreparedStatement consulta = con.getConnection().prepareStatement("SELECT * FROM seccion_ensayo");
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
-                seccionEnsayo.add(new SeccionEnsayo(resultado.getInt("id_seccion_ensayos"), resultado.getString("nombre")));
+                seccionEnsayo.add(new SeccionEnsayo(resultado.getInt("id_seccion_ensayo"), resultado.getString("nombre")));
             }
         } catch (SQLException ex) {
             try {
