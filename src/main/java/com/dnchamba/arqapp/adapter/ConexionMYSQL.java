@@ -151,7 +151,7 @@ public class ConexionMYSQL implements Conexion {
     public List<Laboratorio> getDatosLaboratorio() {
         List<Laboratorio> laboratorio = new ArrayList<>();
         try {
-            PreparedStatement consulta = conexion1.getCon().prepareStatement("SELECT id_laboratorio, nombre, descripcion, us.nombres AS nom_usuario, us.mail AS mail FROM laboratorio lab, usuario us WHERE lab.usuario_id_usuario = us.id_usuario");
+            PreparedStatement consulta = conexion1.getCon().prepareStatement("SELECT id_laboratorio, nombre, descripcion, us.nombres AS nom_usuario, us.email AS mail FROM laboratorio lab, usuario us WHERE lab.usuario_id_usuario = us.id_usuario");
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
                 laboratorio.add(new Laboratorio(resultado.getInt("id_laboratorio"), resultado.getString("nombre"), resultado.getString("descripcion"), resultado.getString("nom_usuario"), resultado.getString("mail")));
@@ -234,7 +234,7 @@ public class ConexionMYSQL implements Conexion {
     public Laboratorio getDatoLab(int id_laboratorio) {
         Laboratorio laboratorioRegistrado = new Laboratorio();
         try {
-            PreparedStatement consulta = conexion1.getCon().prepareStatement("SELECT id_laboratorio, nombre, descripcion, us.nombres AS nom_usuario, us.mail AS mail FROM laboratorio lab, usuario us WHERE lab.usuario_id_usuario = us.id_usuario AND lab.id_laboratorio = " + id_laboratorio);
+            PreparedStatement consulta = conexion1.getCon().prepareStatement("SELECT id_laboratorio, nombre, descripcion, us.nombres AS nom_usuario, us.email AS mail FROM laboratorio lab, usuario us WHERE lab.usuario_id_usuario = us.id_usuario AND lab.id_laboratorio = " + id_laboratorio);
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
                 laboratorioRegistrado = new Laboratorio(resultado.getInt("id_laboratorio"), resultado.getString("nombre"), resultado.getString("descripcion"), resultado.getString("nom_usuario"), resultado.getString("mail"));
@@ -243,6 +243,7 @@ public class ConexionMYSQL implements Conexion {
             try {
                 throw new SQLException(ex);
             } catch (SQLException ex1) {
+                
                 Logger.getLogger(ConexionMYSQL.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }

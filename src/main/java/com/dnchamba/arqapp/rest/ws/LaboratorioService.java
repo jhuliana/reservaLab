@@ -41,7 +41,7 @@ public class LaboratorioService {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsuario(@PathParam("id") int id){
+    public Response getLaboratorio(@PathParam("id") int id){
         Laboratorio output = laboratorioDAO.getLaboratorio(id);
         
         if (output != null) {
