@@ -39,7 +39,7 @@ public interface Conexion {
     public SeccionEnsayo insertDatosSeccionEnsayo(SeccionEnsayo seccionEnsayo);
     public SeccionEnsayo updateDatosSeccionEnsayo(SeccionEnsayo seccionEnsayo);
     public boolean delateDatosSeccionEnsayo(int id);   
-    //Equipo
+    //Equipo}+
     List<Equipo> getDatosEquipo();
     public Equipo getDatoEquipo(int id_equipo);
     public Equipo insertDatosEquipo(Equipo equipo);
